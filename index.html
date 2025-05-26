@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripMate - Travel Route Planner</title>
+  <link rel="stylesheet" href="homepage.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" stroke="#00B2B2" stroke-width="10"/>
+          <circle cx="50" cy="50" r="20" fill="#00B2B2"/>
+        </svg>
+        <span>TripMate</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="routeplanner.html">Route Planner</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <h1>Find Your <span>Best Route</span></h1>
+        <p>Plan your journey with optimal routes, accurate costs, and travel times</p>
+      </div>
+      <div class="search-box">
+        <div class="search-row">
+          <div class="search-item">
+            <label>STARTING POINT</label>
+            <input type="text" id="startLocation" list="indianCities" placeholder="Enter starting point">
+            <datalist id="indianCities">
+              <option value="Mumbai">
+              <option value="Delhi">
+              <option value="Bangalore">
+              <option value="Hyderabad">
+              <option value="Chennai">
+              <option value="Kolkata">
+              <option value="Pune">
+              <option value="Jaipur">
+              <option value="Ahmedabad">
+              <option value="Lucknow">
+              <option value="Kochi">
+              <option value="Chandigarh">
+              <option value="Goa">
+              <option value="Varanasi">
+              <option value="Amritsar">
+              <option value="Agra">
+              <option value="Shimla">
+              <option value="Udaipur">
+              <option value="Darjeeling">
+              <option value="Rishikesh">
+            </datalist>
+          </div>
+        </div>
+        <div class="search-row">
+          <div class="search-item">
+            <label>DESTINATION</label>
+            <input type="text" id="endLocation" list="indianCities" placeholder="Enter destination">
+          </div>
+        </div>
+        <div class="search-row">
+          <div class="search-item">
+            <label>DEPARTURE DATE</label>
+            <input type="date" id="departureDate">
+          </div>
+          <div class="search-item">
+            <label>DEPARTURE TIME</label>
+            <input type="time" id="departureTime">
+          </div>
+        </div>
+        <div class="transportation-options">
+          <div class="transportation-option">
+            <input type="radio" id="car" name="transportType" value="car" checked>
+            <label for="car">Car</label>
+          </div>
+          <div class="transportation-option">
+            <input type="radio" id="train" name="transportType" value="public">
+            <label for="train">Train</label>
+          </div>
+          <div class="transportation-option">
+            <input type="radio" id="bus" name="transportType" value="bus">
+            <label for="bus">Bus</label>
+          </div>
+          <div class="transportation-option">
+            <input type="radio" id="flight" name="transportType" value="flight">
+            <label for="flight">Flight</label>
+          </div>
+        </div>
+        <button class="search-button" id="findRouteBtn">Find Best Route</button>
+      </div>
+    </div>
+    <div id="map" style="height: 400px;"></div>
+  </section>
+  
+  <section class="results-section" id="resultsSection">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Your Best Route</h2>
+      </div>
+      <div class="route-display">
+        <div class="route-summary">
+          <div class="route-info">
+            <h3 id="routeSummaryTitle">Mumbai to Delhi</h3>
+            <p id="routeSummaryTransportType">By Car • Fastest Route</p>
+            <p id="routeSummaryDate">April 6, 2025 • 9:00 AM</p>
+          </div>
+          <div class="route-cost">
+            <div class="price" id="routeCost">₹4,500</div>
+            <div class="note">estimated cost</div>
+          </div>
+        </div>
+        <div class="route-details">
+          <div class="route-detail">
+            <h4>Distance</h4>
+            <p id="routeDistance">1,423 km</p>
+          </div>
+          <div class="route-detail">
+            <h4>Travel Time</h4>
+            <p id="routeTime">21h 30m</p>
+          </div>
+          <div class="route-detail">
+            <h4>Arrival</h4>
+            <p id="routeArrival">6:30 AM (Next day)</p>
+          </div>
+        </div>
+        <div class="route-steps" id="routeSteps">
+          <h3>Journey Steps</h3>
+          <div class="route-step">
+            <div class="route-step-icon">1</div>
+            <div class="route-step-details">
+              <h4>Start from Mumbai</h4>
+              <p>Head north on the Mumbai-Ahmedabad Highway (NH 48)</p>
+            </div>
+          </div>
+          <div class="route-step">
+            <div class="route-step-icon">2</div>
+            <div class="route-step-details">
+              <h4>Continue to Vadodara</h4>
+              <p>Follow NH 48 through Gujarat</p>
+            </div>
+          </div>
+          <div class="route-step">
+            <div class="route-step-icon">3</div>
+            <div class="route-step-details">
+              <h4>Drive towards Udaipur</h4>
+              <p>Take NH 48 through Rajasthan</p>
+            </div>
+          </div>
+          <div class="route-step">
+            <div class="route-step-icon">4</div>
+            <div class="route-step-details">
+              <h4>Continue to Jaipur</h4>
+              <p>Follow NH 48 to Jaipur</p>
+            </div>
+          </div>
+          <div class="route-step">
+            <div class="route-step-icon">5</div>
+            <div class="route-step-details">
+              <h4>Drive to Delhi</h4>
+              <p>Take NH 48 to Delhi</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-column">
+          <h4>TripMate</h4>
+          <p>Making travel planning simple, efficient, and accessible for everyone.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="routeplanner.html">Route Planner</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">LinkedIn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 TripMate. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <script src="homepage.js"></script>
+</body>
+</html>
